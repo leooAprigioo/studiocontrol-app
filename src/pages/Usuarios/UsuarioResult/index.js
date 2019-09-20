@@ -85,7 +85,7 @@ const UsuarioResult = (props) => {
                 :
                 <View style={styles.Options}>
                     <TouchableOpacity 
-                        onPress={() => props.navigation.navigate('CepSearch', {id_perfil: id_perfil})}
+                        onPress={() => props.navigation.navigate('UsuarioAddressForm', {id_perfil: id_perfil, user_type: user_type})}
                         style={[styles.Option, {backgroundColor: ProfessorColor}]}
                     >
                         <Icon name='user-edit' size={20} color='#FFF' />

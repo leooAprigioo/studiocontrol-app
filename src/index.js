@@ -84,7 +84,7 @@ const MedidasStack = createStackNavigator({
 const AlunosStack = createStackNavigator({
     AlunoDetail: {
         screen: AlunoDetail,
-        navigationOptions: headerOptions,
+        
     },
     CreateAlunoResults: {
         screen: CreateAlunoResults,
@@ -97,6 +97,7 @@ const AlunosStack = createStackNavigator({
 },
 {
     initialRouteName: "AlunoDetail",
+    headerMode: 'none'
 });
 
 const ProfessoresStack = createStackNavigator({

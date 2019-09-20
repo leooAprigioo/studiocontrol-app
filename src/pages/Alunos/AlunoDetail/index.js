@@ -103,20 +103,22 @@ import EnderecoService from '../../../services/EnderecoService';
 
 const AlunoDetail = (props) => {
 
-    const [aluno, setAluno] = useState({});
+    const [usuario, setUsuario] = useState([]);
+    const [user_type, setUser_Type] = useState([])
     const [telefones, setTelefones] = useState([]);
     const [endereco, setEndereco] = useState([]);
 
     async function fetchData() {
-        const aluno = props.navigation.getParam('aluno', {});
+        const id_perfil = props.navigation.getParam('id_perfil');
+        const user_type = props.navigation.getParam('user_type');
 
-        if (Object.keys(aluno).length > 0) {
-            setAluno(aluno);
-        }
-
-        // await PerfilService.getAluno(id_perfil).then((resultsAluno) => {setAluno(resultsAluno[0]); console.log(resultsAluno)}).catch((error) => {console.log(error)});
-        await TelefoneService.get(aluno.id_perfil).then((resultsTelefone) => {setTelefones(resultsTelefone); console.log(telefones)}).catch((error) => {console.log(error)});
-        await EnderecoService.getByPerfil(aluno.id_perfil).then((resultsEndereco) => {setEndereco(resultsEndereco); console.log(endereco)}).catch((error) => {console.log(error)});
+        await PerfilService.get_full(id_perfil).then((resultsPerfil) => {
+            console.log(resultsPerfil)
+            if (resultsPerfil[0].telefone != null && resultsPerfil[0].telefone != '') {
+                resultsPerfil[0].telefone = resultsPerfil[0].telefone.split(',')
+            }
+            setUsuario(resultsPerfil[0]); 
+        }).catch((error) => {console.log(error)});
         
     } 
 
@@ -143,38 +145,38 @@ const AlunoDetail = (props) => {
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>E-mail:</Text>
-                            <Text style={styles.DataValue}>{aluno.email ? aluno.email : 'Não cadastrado'}</Text>
+                            <Text style={styles.DataValue}>{usuario.email ? usuario.email : 'Não cadastrado'}</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Telefone:</Text>
-                            { telefones && (telefones.length > 0) ? telefones.map((tel) => {return <Text style={styles.DataValue} key={tel.telefone}>{tel.telefone}</Text>}) : <Text style={styles.DataValue}>Não cadastrado</Text>}
+                            { usuario.telefone != null && (usuario.telefone.length > 0) ? usuario.telefone.map((tel) => {return <Text style={styles.DataValue} key={tel.telefone}>{tel.telefone}</Text>}) : <Text style={styles.DataValue}>Não cadastrado</Text>}
                         </View>
                     </View>
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>RG:</Text>
-                            <Text style={styles.DataValue}>{aluno.rg}</Text>
+                            <Text style={styles.DataValue}>{usuario.rg}</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>CPF:</Text>
-                            <Text style={styles.DataValue}>{aluno.cpf}</Text>
+                            <Text style={styles.DataValue}>{usuario.cpf}</Text>
                         </View>
                     </View>
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>Data de nascimento:</Text>
-                            <Text style={styles.DataValue}>{aluno.data_nascimento}</Text>
+                            <Text style={styles.DataValue}>{usuario.data_nascimento}</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Data do cadastro:</Text>
-                            <Text style={styles.DataValue}>{aluno.data_cadastro}</Text>
+                            <Text style={styles.DataValue}>{usuario.data_cadastro}</Text>
                         </View>
                     </View>
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Endereço:</Text>
                             <Text style={styles.DataValue}>{
-                                endereco[0] ? endereco.map((end) => {
+                                usuario.endereco != null ? endereco.map((end) => {
                                     return end.nome_rua + ', ' + end.numero + (end.complementos ? ', ' + end.complementos : '') + ' - ' + end.bairro + ' - ' + end.cep + ' - ' + end.cidade + ' - ' + end.estado
                                 }) : 'Não cadastrado'
                                 }</Text>
@@ -333,15 +335,7 @@ const AlunoDetail = (props) => {
 
 AlunoDetail.navigationOptions = ({ navigation }) => {
     return {
-        headerLeft: 
-            <TouchableOpacity
-                style={{paddingHorizontal: 20}}
-                onPress={() => navigation.navigate('AlunosList')
-                }
-            >
-                <Icon name='arrow-left' size={30} color='#FFF' />
-            </TouchableOpacity>,
-        headerTitle: 'Informações do aluno'
+        HeaderTitle: 'Teste'
     }
 }
 

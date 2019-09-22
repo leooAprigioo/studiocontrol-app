@@ -25,22 +25,11 @@ import PlanoForm from './pages/Planos/PlanoForm'
 import UsuarioList from './pages/Usuarios/UsuarioList';
 import UsuarioForm from './pages/Usuarios/UsuarioForm';
 import UsuarioResult from './pages/Usuarios/UsuarioResult';
+import UsuarioDetail from './pages/Usuarios/UsuarioDetail';
 import UsuarioAddressForm from './pages/Usuarios/UsuarioAddressForm';
-
-/* Aluno */
-import AlunoDetail from './pages/Alunos/AlunoDetail';
-import CreateAlunoResults from './pages/Alunos/CreateAlunoResults';
 
 /* Professores */
 import ProfessorDetail from './pages/Professores/ProfessorDetail';
-import CreateProfessorResults from './pages/Professores/CreateProfessorResults';
-
-/* Perfil */
-import CreatePerfil from './pages/Perfil/CreatePerfil';
-import GoalForm from './pages/Alunos/GoalForm';
-import GraduationForm from './pages/Professores/GraduationForm';
-import CepSearch from './pages/Perfil/CepSearch';
-import AddressForm from './pages/Perfil/AddressForm';
 
 /* Medidas */
 import MedidasList from './pages/Medidas/MedidasList';
@@ -49,6 +38,7 @@ import MedidasForm from './pages/Medidas/MedidasForm';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
+import { MedidasColor } from './shared/styles/colors';
 
 
 const headerOptions = {
@@ -71,7 +61,9 @@ const LoginStack = createStackNavigator({
 const MedidasStack = createStackNavigator({
     MedidasList: {
         screen: MedidasList,
-        navigationOptions: headerOptions,
+        navigationOptions: {
+            header: null,
+        },
     },
     MedidasForm: {
         screen: MedidasForm,
@@ -81,35 +73,11 @@ const MedidasStack = createStackNavigator({
     initialRouteName: 'MedidasList',
 });
 
-const AlunosStack = createStackNavigator({
-    AlunoDetail: {
-        screen: AlunoDetail,
-        
-    },
-    CreateAlunoResults: {
-        screen: CreateAlunoResults,
-        navigationOptions: headerOptions,
-    },
-    Medidas: {
-        screen: MedidasStack,
-        navigationOptions: {header: null}
-    },
-},
-{
-    initialRouteName: "AlunoDetail",
-    headerMode: 'none'
-});
-
 const ProfessoresStack = createStackNavigator({
     ProfessorDetail: {
         screen: ProfessorDetail,
         navigationOptions: headerOptions,
     },
-    CreateProfessorResults: {
-        screen: CreateProfessorResults,
-        navigationOptions: headerOptions,
-    },
-
 },
 {
     initialRouteName: "ProfessorDetail",
@@ -118,11 +86,6 @@ const ProfessoresStack = createStackNavigator({
 
 
 const UsuarioStack = createStackNavigator({
-    CreatePerfil: {
-        screen: CreatePerfil,
-        navigationOptions: {header: null},
-    },
-    Alunos: AlunosStack,
     UsuarioResult: {
         screen: UsuarioResult,
         // navigationOptions: headerOptions,
@@ -135,24 +98,19 @@ const UsuarioStack = createStackNavigator({
         screen: UsuarioForm,
         // navigationOptions: headerOptions,
     },
+    UsuarioDetail: {
+        screen: UsuarioDetail,
+    },
+    Medidas: {
+        screen: MedidasStack,
+        navigationOptions: {
+            headerStyle: {backgroundColor: MedidasColor},
+            title: 'Medidas',
+            headerTintColor: '#FFF'
+        }
+    },
     UsuarioAddressForm: {
         screen: UsuarioAddressForm,
-    },
-    GoalForm: {
-        screen: GoalForm,
-        navigationOptions: headerOptions,
-    },
-    GraduationForm: {
-        screen: GraduationForm,
-        navigationOptions: headerOptions,
-    },
-    CepSearch: {
-        screen: CepSearch,
-        navigationOptions: headerOptions,
-    },
-    AddressForm: {
-        screen: AddressForm,
-        navigationOptions: headerOptions,
     },
 
 },
@@ -201,6 +159,7 @@ PlanoStack.navigationOptions = ({ navigation }) => {
       tabBarVisible,
     };
   };
+  
 
 TurmaStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
@@ -212,6 +171,15 @@ TurmaStack.navigationOptions = ({ navigation }) => {
         tabBarVisible,
     };
 };
+
+MedidasStack.navigationOptions = ({ navigation }) => {
+    let header = null;
+    if (navigation.state.index > 0) {
+        return {
+            header,
+        };
+    }
+  };
 
 const PlanosTab = createBottomTabNavigator({
     Planos: {

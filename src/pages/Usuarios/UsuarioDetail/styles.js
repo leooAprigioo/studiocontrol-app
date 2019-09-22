@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { PlanoColor } from '../../../shared/styles/colors';
 
 export const Container = {
     flex: 1,
@@ -54,9 +55,19 @@ export const DataTitle = {
     fontWeight: 'bold',
 };
 
+export const DataSubTitle = {
+    fontSize: 18, 
+    color: '#111',
+}
+
 export const DataValue = {
     fontSize: 13,
 };
+
+export const DataPrice = {
+    color: PlanoColor,
+    fontWeight: 'bold'
+}
 
 export const DataDescription = {
     fontSize: 12,

@@ -95,7 +95,16 @@ const UsuarioAddressForm = (props) => {
     const [cepNotFound, setCepNotFound] = useState(false)
     const [editable, setEditable] = useState(true)
 
+    const ClearAddressProps = () => {
+        props.values.nome_rua = '';
+        props.values.bairro = '';
+        props.values.estado = '';
+        props.values.cidade = '';
+    }
+
     const CepSearch = ()  => {
+        setEditable(true)
+        ClearAddressProps
         cepNumber = props.values.cep
         cep(cepNumber).then((results) => {
             if ('CepPromiseError' in results) {
@@ -103,14 +112,15 @@ const UsuarioAddressForm = (props) => {
                 setShowAddressForm(true)
                 setEditable(true)
             } else {
+                console.log(results)
                 props.values.nome_rua = results.street;
                 props.values.bairro = results.neighborhood;
-                props.values.cep = results.cep;
                 props.values.estado = results.state;
                 props.values.cidade = results.city;
                 setCepNotFound(false)
                 setShowAddressForm(true)
                 setEditable(false)
+                console.log(props)
             }
         }).catch((error) => {
             console.log(error)
@@ -154,7 +164,7 @@ const UsuarioAddressForm = (props) => {
                                     includeRawValueInChangeText={true}
                                     onChangeText={(text, textRaw) => props.setFieldValue('cep', textRaw)}
                                 />
-                                    { props.errors.cep && <Text style={fonts.ErrorMessage}>{props.errors.cep}</Text> }
+                                    { (props.errors.cep && props.isSubmitting) && <Text style={fonts.ErrorMessage}>{props.errors.cep}</Text> }
                             </View>
                             <View style={styles.Data}>
                                 <TouchableOpacity 
@@ -187,7 +197,7 @@ const UsuarioAddressForm = (props) => {
                                         value={props.values.nome_rua}
                                         onChangeText={text => props.setFieldValue('nome_rua', text)}
                                     />
-                                    { props.errors.nome_rua && <Text style={fonts.ErrorMessage}>{props.errors.nome_rua}</Text> }
+                                    { props.errors.nome_rua &&  <Text style={fonts.ErrorMessage}>{props.errors.nome_rua}</Text> }
                                 </View>
                                 <View style={styles.DataRow}>
                                     <View style={[styles.Data, {flex:2}]}>
@@ -207,6 +217,7 @@ const UsuarioAddressForm = (props) => {
                                             placeholder="Numero"
                                             underlineColorAndroid='#111'
                                             selectionColor='#111'
+                                            keyboardType='number-pad'
                                             style={styles.DataInput}
                                             value={props.values.numero}
                                             onChangeText={text => props.setFieldValue('numero', text)}
@@ -273,7 +284,6 @@ const UsuarioAddressForm = (props) => {
                                         <Picker.Item label='SE' value='SE' />
                                         <Picker.Item label='TO' value='TO' />
                                     </Picker>
-                                    
                                 </View>
                                 { props.errors.estado && <Text style={fonts.ErrorMessage}>{props.errors.estado}</Text> }
                             </View>
@@ -329,8 +339,6 @@ export default withFormik({
             .required('Preencha o campo bairro'),
         cep: Yup.string()
             .required('Preencha o campo CEP'),
-        complementos: Yup.string()
-            .required('Preencha o campo complementos'),
         numero: Yup.string()
             .required('Preencha o campo numero'),
         cidade: Yup.string()
@@ -341,7 +349,10 @@ export default withFormik({
   
     handleSubmit: (values, props) => {
         console.log(values)
+        
         const id_perfil = props.props.navigation.getParam('id_perfil');
+        const user_type = props.props.navigation.getParam('user_type');
+        const id_aluno_prof = props.props.navigation.getParam('id_aluno_prof');
         values.id_perfil = id_perfil;
         EnderecoService.post(values).then((resultsEndereco) => {
             console.log(EnderecoService)
@@ -358,7 +369,7 @@ export default withFormik({
                 Alert.alert('Endereço atualizado com sucesso', 'O endereço foi cadastrado com sucesso.', 
                 [{
                     text: 'Ok',
-                    onPress: () => props.props.navigation.goBack()
+                    onPress: () => props.props.navigation.navigate('UsuarioResult', {id_perfil: id_perfil, user_type: user_type, id_aluno_prof: id_aluno_prof})
                 }],
                 {cancelable: false},
             )

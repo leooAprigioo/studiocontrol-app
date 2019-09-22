@@ -99,7 +99,7 @@ const ProfessoresList = (props) => {
             /> : <Text style={{textAlign: 'center', fontSize: 16, paddingTop: 20}}>Não há professores cadastrados</Text>}{console.log(error)}
             <TouchableOpacity 
                 style={[buttons.FloatingButton, {backgroundColor: ProfessorColor}]}
-                onPress={() => props.navigation.navigate('CreatePerfil', {type: 'professor'})}
+                onPress={() => props.navigation.navigate('UsuarioForm', {type: 'professor'})}
             >
                 <Icon name='plus' size={20} color='#FFF' />
             </TouchableOpacity>

@@ -55,13 +55,6 @@ const UsuarioResult = (props) => {
                 user_type == 'aluno' ?
                 <View style={styles.Options}>
                     <TouchableOpacity 
-                        onPress={() => props.navigation.navigate('UsuarioAddressForm', {id_perfil: id_perfil, user_type: user_type})}
-                        style={[styles.Option, {backgroundColor: user_type == 'aluno' ? AlunoColor : ProfessorColor}]}
-                    >
-                        <Icon name='user-edit' size={20} color='#FFF' />
-                        <Text style={styles.OptionTitle}>Adicionar endereço</Text>
-                    </TouchableOpacity> 
-                    <TouchableOpacity 
                         style={[styles.Option, {backgroundColor: MedidasColor}]}
                     >
                         <Icon name='ruler' size={20} color='#FFF' />
@@ -84,13 +77,6 @@ const UsuarioResult = (props) => {
                 </View>
                 :
                 <View style={styles.Options}>
-                    <TouchableOpacity 
-                        onPress={() => props.navigation.navigate('UsuarioAddressForm', {id_perfil: id_perfil, user_type: user_type})}
-                        style={[styles.Option, {backgroundColor: ProfessorColor}]}
-                    >
-                        <Icon name='user-edit' size={20} color='#FFF' />
-                        <Text style={styles.OptionTitle}>Adicionar endereço</Text>
-                    </TouchableOpacity> 
                     <TouchableOpacity 
                         style={[styles.Option, {backgroundColor: PlanoColor}]}
                     >

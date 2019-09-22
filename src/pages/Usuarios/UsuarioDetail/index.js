@@ -7,7 +7,8 @@ import {
     TouchableOpacity,
     TextInput,
     Text,
-    Button
+    Button,
+    ActivityIndicator
 } from 'react-native';
 
 import {
@@ -24,6 +25,7 @@ import {
     AulaColor,
     PlanoColor,
     AlunoColor,
+    ProfessorColor,
 
 } from '../../../shared/styles/colors'
 
@@ -57,7 +59,9 @@ import {
     SectionHorizontalItem,
     Data,
     DataTitle,
+    DataSubTitle,
     DataValue,
+    DataPrice,
     DataDescription,
     Option,
     OptionTitle,
@@ -85,7 +89,9 @@ const styles = StyleSheet.create({
     SectionHorizontalItem,
     Data,
     DataTitle,
+    DataSubTitle,
     DataValue,
+    DataPrice,
     DataDescription,
     Option,
     OptionTitle,
@@ -98,44 +104,83 @@ const styles = StyleSheet.create({
     MensalidadePendente,
 });
 
-import TelefoneService from '../../../services/TelefoneService';
-import EnderecoService from '../../../services/EnderecoService';
+import AlunoService from '../../../services/AlunoService';
+import PerfilService from '../../../services/PerfilService';
+import TurmaService from '../../../services/TurmaService';
+import PlanoService from '../../../services/PlanoService';
 
-const AlunoDetail = (props) => {
+const UsuarioDetail = (props) => {
 
     const [usuario, setUsuario] = useState([]);
+    const [loader, setLoader] = useState(true)
     const [user_type, setUser_Type] = useState([])
-    const [telefones, setTelefones] = useState([]);
-    const [endereco, setEndereco] = useState([]);
+    const [aluno, setAluno] = useState([]);
+    const [turma, setTurma] = useState([]);
+    const [plano, setPlano] = useState([]);
 
     async function fetchData() {
         const id_perfil = props.navigation.getParam('id_perfil');
         const user_type = props.navigation.getParam('user_type');
+        const aluno = props.navigation.getParam('aluno');
+        setAluno(aluno)
+        console.log(user_type)
 
         await PerfilService.get_full(id_perfil).then((resultsPerfil) => {
             console.log(resultsPerfil)
             if (resultsPerfil[0].telefone != null && resultsPerfil[0].telefone != '') {
-                resultsPerfil[0].telefone = resultsPerfil[0].telefone.split(',')
+                console.log(resultsPerfil[0].telefone)
+                resultsPerfil[0].telefone = (resultsPerfil[0].telefone).toString().split(',')
+                console.log(resultsPerfil[0].telefone)
             }
+
+            if (resultsPerfil[0].data_cadastro != null && resultsPerfil[0].data_cadastro != '') {
+                resultsPerfil[0].data_cadastro = new Date(resultsPerfil[0].data_cadastro)
+            }
+
+            if (resultsPerfil[0].data_nascimento != null && resultsPerfil[0].data_nascimento != '') {
+                resultsPerfil[0].data_nascimento = new Date(resultsPerfil[0].data_nascimento)
+            }
+
             setUsuario(resultsPerfil[0]); 
         }).catch((error) => {console.log(error)});
         
+        if (user_type == 'aluno') {
+            await AlunoService.get(aluno.id_aluno).then((resultsAluno) => {
+                setAluno(resultsAluno[0])
+                TurmaService.get_turma_aluno_resumo(resultsAluno[0].id).then((resultsTurma) => {
+                
+                    resultsTurma.map((turma) => {
+                        console.log(turma)
+                    turma.horario_aula = turma.horario_aula.split(',')
+                    })
+                    setTurma(resultsTurma)
+                })
+                PlanoService.get_plano_aluno_resumo(resultsAluno[0].id).then((resultsPlano) => setPlano(resultsPlano[0]))
+            }).catch((error) => console.log(error))
+
+        }
+
     } 
 
     useEffect(() => {
-        fetchData()
+        fetchData().then(setLoader(false));
     }, [])
 
     return(
+
         <ScrollView 
             style={styles.Container}
             showsVerticalScrollIndicator={false}
         >
+            {
+            loader ?
+            <ActivityIndicator size='large' color={user_type == 'aluno' ? AlunoColor : ProfessorColor} />
+            :
             <View style={styles.Container}>
                 <View style={styles.ContainerHeader}>
-                    <Text style={fonts.Title}>{aluno.nome_completo}{console.log(aluno)}</Text>
-                    <Text style={fonts.SubTitle}>Plano Tal</Text>
-                    <Text style={fonts.Description}>{aluno.objetivo}</Text>
+                    <Text style={fonts.Title}>{usuario.nome_completo}</Text>
+                    <Text style={fonts.SubTitle}>{aluno.objetivo}{console.log(aluno)}{console.log(turma)}{console.log(plano)}</Text>
+                    {/* <Text style={fonts.Description}>{aluno.objetivo}</Text> */}
                 </View>
                 <View style={components.Divisor}></View>
                 <View style={styles.SectionPerfil}>
@@ -149,7 +194,7 @@ const AlunoDetail = (props) => {
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Telefone:</Text>
-                            { usuario.telefone != null && (usuario.telefone.length > 0) ? usuario.telefone.map((tel) => {return <Text style={styles.DataValue} key={tel.telefone}>{tel.telefone}</Text>}) : <Text style={styles.DataValue}>Não cadastrado</Text>}
+                            { usuario.telefone != null && (usuario.telefone.length > 0) ? usuario.telefone.map((tel) => {return <Text style={styles.DataValue} key={tel.toString()}>{tel}{console.log(tel)}</Text>}) : <Text style={styles.DataValue}>Não cadastrado</Text>}
                         </View>
                     </View>
                     <View style={styles.SectionHorizontalItem}>
@@ -165,20 +210,21 @@ const AlunoDetail = (props) => {
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>Data de nascimento:</Text>
-                            <Text style={styles.DataValue}>{usuario.data_nascimento}</Text>
+                            {console.log(usuario.data_nascimento)}
+                            <Text style={styles.DataValue}>{usuario.data_nascimento != null ? usuario.data_nascimento.getDate().toString() + '/' + usuario.data_nascimento.getMonth().toString() + '/' +usuario.data_nascimento.getFullYear().toString() : ''}</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Data do cadastro:</Text>
-                            <Text style={styles.DataValue}>{usuario.data_cadastro}</Text>
+                            <Text style={styles.DataValue}>{usuario.data_cadastro != null ? usuario.data_cadastro.getDate().toString() + '/' + usuario.data_cadastro.getMonth().toString() + '/' +usuario.data_cadastro.getFullYear().toString() : ''}</Text>
                         </View>
                     </View>
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Endereço:</Text>
-                            <Text style={styles.DataValue}>{
-                                usuario.endereco != null ? endereco.map((end) => {
-                                    return end.nome_rua + ', ' + end.numero + (end.complementos ? ', ' + end.complementos : '') + ' - ' + end.bairro + ' - ' + end.cep + ' - ' + end.cidade + ' - ' + end.estado
-                                }) : 'Não cadastrado'
+                            <Text style={[styles.DataValue, {textAlign: 'center'}]}>{
+                                usuario.nome_rua != null ? 
+                                usuario.nome_rua + ', ' + usuario.numero + (usuario.complementos ? ', ' + usuario.complementos : '') + ' - ' + usuario.bairro + ' - ' + usuario.cep + ' - ' + usuario.cidade + ' - ' + usuario.estado
+                                 : 'Não cadastrado'
                                 }</Text>
                         </View>
                     </View>
@@ -208,7 +254,7 @@ const AlunoDetail = (props) => {
                         </TouchableOpacity> 
                         <TouchableOpacity 
                             style={[styles.Option, {backgroundColor: MedidasColor}]}
-                            onPress = {() => {props.navigation.navigate('MedidasList', {aluno: aluno})}}
+                            onPress = {() => {props.navigation.navigate('MedidasList', {id_aluno: aluno.id})}}
                         >
                             <Icon name='ruler' size={20} color='#FFF' />
                             <Text style={styles.OptionTitle}>Medidas</Text>
@@ -227,34 +273,56 @@ const AlunoDetail = (props) => {
                     </View>
                     <View style={styles.ContainerHeader}>
                         <View style={styles.ContainerHeader}>
-                            <Text style={fonts.Title}>Plano Tal</Text>
+                            <Text style={fonts.Title}>{plano.nome_plano}</Text>
                             <Text style={
                                 fonts.Description
-                                }>Plano Tal Lorem Ipsum Bla Bla Bla nnca nsa nosano sana  nas ionioanfosanfoi a sionsafoisa nsofsao naso ano san oisnfoisan nao inaoi nsaionfoiasn ois noia noi ao in asn oisn oain osi oas ois asio nsao ns</Text>
+                                }>{plano.descricao_plano}</Text>
                         </View>
                     </View>
                     <View style={components.Divisor}></View>
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>Aulas por semana:</Text>
-                            <Text style={styles.DataValue}>2</Text>
+                            <Text style={styles.DataValue}>{plano.quantidade_aula}</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
-                            <Text style={styles.DataTitle}>Tipo da Aula:</Text>
-                            <Text style={styles.DataValue}>Aula básica</Text>
+                            <Text style={styles.DataTitle}>Valor do plano:</Text>
+                            <Text style={[styles.DataValue, styles.DataPrice]}>R$ 
+                            {plano.valor_plano ? plano.valor_plano.toFixed(2).replace('.', ',') : null}</Text>
                         </View>
                     </View>
 
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
+                            <Text style={[fonts.Title]}>Turmas</Text>
+                        </View>
+                    </View>
+                    <View style={styles.SectionHorizontalItem}>
+                        <View style={[styles.Data, styles.AlignSelfStart]}>
                             <Text style={styles.DataTitle}>Nome da turma:</Text>
-                            <Text style={styles.DataValue}>Turma de coxa grossa</Text>
                         </View>
                         <View style={[styles.Data, styles.AlignSelfEnd]}>
                             <Text style={styles.DataTitle}>Horário da turma:</Text>
-                            <Text style={styles.DataValue}>Terça-Feira, 19:00</Text>
                         </View>
                     </View>
+                    {turma && turma.length > 0 ? 
+                    turma.map((tur) => {
+                    return <View style={styles.SectionHorizontalItem} key={tur.id_turma}>
+                        <View style={[styles.Data, styles.AlignSelfStart]}>
+                            <Text style={styles.DataValue}>{tur.nome_turma}</Text>
+                        </View>
+                        <View style={[styles.Data, styles.AlignSelfEnd]}>
+                            <Text style={styles.DataValue}>{tur.horario_aula[0]}{tur.horario_aula.length > 1 ? <Text style={{fontWeight:'bold', marginHorizontal: 2}}>+</Text>: <Text></Text>}</Text>
+                        </View>
+                    </View> 
+                    })
+                    :
+                    <View style={styles.SectionHorizontalItem}>
+                        <View style={[styles.Data, styles.AlignSelfStart]}>
+                            <Text style={styles.DataValue}>Não há turmas cadastradas</Text>
+                        </View>
+                    </View>
+                    }
                     <Text style={[fonts.SubTitle, {paddingLeft: 20}]}>Próximas aulas:</Text>
                     <ScrollView
                         horizontal={true}
@@ -329,14 +397,18 @@ const AlunoDetail = (props) => {
                     </View>
                 </View>
             </View>
+            }
         </ScrollView>
     );
 }
 
-AlunoDetail.navigationOptions = ({ navigation }) => {
+UsuarioDetail.navigationOptions = ({ navigation }) => {
+    const user_type = navigation.getParam('user_type', 'aluno')
     return {
-        HeaderTitle: 'Teste'
-    }
+            headerTitle: user_type == 'aluno' ? 'Informações do aluno' : 'Informações do professor',
+            headerStyle: {backgroundColor: user_type == 'aluno' ? AlunoColor : ProfessorColor},
+            headerTintColor: '#FFF'
+        }  
 }
 
-export default AlunoDetail;
+export default UsuarioDetail;

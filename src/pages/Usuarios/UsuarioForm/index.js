@@ -122,7 +122,7 @@ const UsuarioForm = (props) => {
         
         <ScrollView>
             {/* container */}
-            {console.log(planos)}
+
             <View style={styles.Container}>
                 {/* header */}
                 <View style={styles.Header}>
@@ -260,7 +260,7 @@ const UsuarioForm = (props) => {
                                     selectedValue={props.values.id_plano}
                                     onValueChange={text => props.setFieldValue('id_plano', text)}
                                 >
-                                    <Picker.Item label='Selecione o professor' value='' />
+                                    <Picker.Item label='Selecione o plano' value='' />
                                     {planos.map((plano) => {
                                         return <Picker.Item label={plano.nome} value={plano.id} key={plano.id.toString()}/>
                                     })}
@@ -409,7 +409,7 @@ export default withFormik({
                                 )
                                 return false
                             } else {
-                                props.props.navigation.navigate('UsuarioResult', {user_type: user_type, id_perfil: resultsPerfil[0].id, id_aluno_prof: resultsAluno[0].id })
+                                props.props.navigation.navigate('UsuarioAddressForm', {user_type: user_type, id_perfil: resultsPerfil[0].id, id_aluno_prof: resultsAluno[0].id })
                             }
                             console.log(resultsAluno)
                         }).catch((error) => {
@@ -435,7 +435,7 @@ export default withFormik({
                                 )
                                 return false
                             } else {
-                                props.props.navigation.navigate('UsuarioResult', {user_type: user_type, id_perfil: resultsPerfil[0].id, id_aluno_prof: resultsProfessor[0].id })
+                                props.props.navigation.navigate('UsuarioAddressForm', {user_type: user_type, id_perfil: resultsPerfil[0].id, id_aluno_prof: resultsProfessor[0].id })
                             }
                         }).catch((error) => {
                             Alert.alert('Não foi possível cadastrar o professor', 'Pedimos desculpas pelo transtorno. Tente novamente mais tarde.', 

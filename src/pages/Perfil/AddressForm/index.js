@@ -303,7 +303,7 @@ export default withFormik({
             }
             if (resultsEndereco.length > 0) {
                 if (type == 'aluno') {
-                    props.props.navigation.navigate('AlunoDetail', {id_perfil: id_perfil});
+                    props.props.navigation.navigate('UsuarioDetail', {id_perfil: id_perfil});
                 } else if (type == 'professor') {
                     props.props.navigation.navigate('ProfessorDetail', {id_perfil: id_perfil});
                 }

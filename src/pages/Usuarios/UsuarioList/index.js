@@ -99,7 +99,7 @@ const UsuarioList = (props) => {
                         renderItem={({item}) => 
                             <TouchableOpacity 
                                 style={[styles.ListItem, {borderLeftColor: AlunoColor,}]}
-                                onPress={() => props.navigation.navigate('AlunoDetail', {aluno: item})}
+                                onPress={() => props.navigation.navigate('UsuarioDetail', {id_perfil: item.id_perfil, aluno: {id_aluno: item.id, objetivo: item.objetivo, id_plano: item.id_plano}, user_type: user_type})}
                             >
                                 <Text style={styles.ListItemTitle}>{item.nome_completo}</Text>
                                 <Text style={styles.GoalDescription}>{item.objetivo}</Text>
@@ -121,7 +121,7 @@ const UsuarioList = (props) => {
                     renderItem={({item}) => 
                         <TouchableOpacity 
                             style={[styles.ListItem, {borderLeftColor: ProfessorColor,}]}
-                            onPress={() => props.navigation.navigate('ProfessorDetail', {professor: item})}
+                            //onPress={() => props.navigation.navigate('UsuarioDetail', {id_perfil: item.id_perfil, aluno: {id_aluno: item.id, objetivo: item.objetivo, id_plano: item.id_plano}, user_type: user_type})}
                         >
                             <Text style={styles.ListItemTitle}>{item.nome_completo}</Text>
                             <Text style={styles.GoalDescription}>{item.graduacao}{console.log(item)}</Text>

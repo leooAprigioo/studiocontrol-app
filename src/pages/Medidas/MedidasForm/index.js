@@ -32,6 +32,7 @@ import * as Yup from 'yup';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import MedidasService from '../../../services/MedidasService';
+import { MedidasColor } from '../../../shared/styles/colors';
 
 const styles = StyleSheet.create({
     Container,
@@ -58,13 +59,12 @@ const MedidasForm = (props) => {
                 <View style={styles.Header}>
                     <View style={{flexDirection: 'row'}}>
                         
-                        <Text style={[fonts.Title, {paddingHorizontal : 7}]}>
+                        <Text style={[fonts.Title, {paddingHorizontal : 7, color: MedidasColor}]}>
                             Medidas
                         </Text>
-                        <Icon name='ruler' size={20} color='#414141' />
                     </View>
-                    <Text style={fonts.SubTitle}>
-                        Cadastre as medidas do aluno
+                    <Text style={[fonts.SubTitle, {textAlign: 'center'}]}>
+                        Preencha os campos para cadastrar uma nova medida
                     </Text>
                 </View>
                 <View style={styles.Content}>
@@ -258,19 +258,11 @@ const MedidasForm = (props) => {
 
 MedidasForm.navigationOptions = ({ navigation }) => {
     return {
-        // headerLeft: 
-//             <TouchableOpacity
-//                 style={{paddingHorizontal: 20}}
-//                 onPress={() => navigation.navigate('AlunosList')
-//                 }
-//             >
-//                 <Icon name='arrow-left' size={30} color='#FFF' />
-//             </TouchableOpacity>,
-        headerTitle: 'Cadastrar medida',
+        title: 'Cadastrar medida',
         headerStyle: {
-            backgroundColor: '#48a89e'
+            backgroundColor: MedidasColor
         },
-        headerTintColor: '#fff',
+        headerTintColor: '#FFF',
     }
 }
 

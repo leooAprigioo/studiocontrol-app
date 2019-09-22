@@ -202,6 +202,7 @@ export const PlanoPrice = {
     color: PlanoColor,
     fontWeight: 'bold',
     fontSize: 17,
+    textAlign: 'center',
 }
 
 export const PlanoFooter = {

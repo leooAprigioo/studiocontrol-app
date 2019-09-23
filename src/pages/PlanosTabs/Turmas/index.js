@@ -38,7 +38,7 @@ import {
     FloatingButton,
 } from '../../../shared/styles/buttons'
 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import TurmaService from '../../../services/TurmaService';
 
 const styles = StyleSheet.create({
@@ -150,270 +150,6 @@ const Turmas = (props) => {
                             :
                             <View></View>
                         }
-
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-
-
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.Turma}>
-                            {/* TurmaColumn */}
-                            <View style={[styles.TurmaColumn, styles.TurmaHeader]}>
-                                {/* Nome da turma */ }
-                                <Text style={styles.TurmaTitle}>Nome da Turma</Text>
-                                {/* Descrição */ }
-                                <Text style={styles.TurmaDescription}>
-                                    Pie jelly pudding jujubes. Muffin powder cotton candy chocolate toffee cake 
-                                </Text>
-                            </View>
-                            <View style={[styles.TurmaColumn, TurmaContent]}>
-                                {/* Alunos matriculados */ }
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Alunos matrículados: </Text>
-                                    <Text style={styles.TurmaDataValue}>37</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Horário da aula:</Text>
-                                    <Text style={styles.TurmaDataValue}>Segundas-Feiras às 19:00</Text>
-                                </View>
-                                <View style={styles.TurmaData}>
-                                    <Text style={styles.TurmaDataTitle}>Professor:</Text>
-                                    <Text style={styles.TurmaDataValue}>André</Text>
-                                </View>
-                                <View style={[styles.TurmaData, {alignSelf: 'center'}]}>
-                                    <Text style={styles.TurmaDataPrice}>R$ 130/Mês</Text>
-                                </View>
-                            </View>
-                        </TouchableOpacity>
                     </View>
                 </View>
             }
@@ -426,11 +162,27 @@ const Turmas = (props) => {
                     style={[buttons.FloatingButton, {backgroundColor: PlanoColor}]}
                     onPress={() => props.navigation.navigate('TurmaForm')}
                 >
-                    <Icon name='plus' size={20} color='#FFF' />
+                    <Icon name='add' size={20} color='#FFF' />
                 </TouchableOpacity>
             }
         </View>
     );
+}
+
+Turmas.navigationOptions = ({ navigation }) => {
+    return {
+        headerStyle: {backgroundColor: PlanoColor},
+        headerTintColor: '#FFF',
+        title: 'Planos e Turmas',
+        headerLeft: 
+            <TouchableOpacity
+            style={{margin: 3, paddingLeft: 12}}
+                onPress={() => navigation.navigate('Estudio')
+                }
+            >
+                <Icon name='arrow-back' size={24} color='#FFF' />
+            </TouchableOpacity>,
+    }
 }
 
 export default Turmas;

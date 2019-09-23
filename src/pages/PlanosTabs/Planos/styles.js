@@ -70,7 +70,7 @@ export const SliderAulasItem = {
 }
 
 export const PlusBorder = {
-    borderWidth: 5, 
+    borderWidth: 3, 
     borderRadius: 100, 
     borderColor: '#71C1D9', 
     width: 60, 

@@ -48,7 +48,7 @@ import {
     PlanoColor
 } from '../../../shared/styles/colors'
 
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PlanoService from '../../../services/PlanoService';
 import AulaService from '../../../services/AulaService';
@@ -156,7 +156,7 @@ const Planos = (props) => {
                             onPress={() => props.navigation.navigate('AulaForm')}
                             >
                                 <View style={styles.PlusBorder}>
-                                    <Icon name='plus' size={40} color='#71C1D9'></Icon>
+                                    <Icon name='add' size={40} color='#71C1D9'></Icon>
                                 </View>
                                 <View>
                                     <Text style={{color: '#71C1D9', paddingTop: 10}}>Nova aula</Text>
@@ -204,7 +204,7 @@ const Planos = (props) => {
                             onPress={() => props.navigation.navigate('PlanoForm')}
                         >
                             <View style={styles.PlusBorder}>
-                                <Icon name='plus' size={40} color='#71C1D9' />
+                                <Icon name='add' size={40} color='#71C1D9' />
                             </View>
                             <View>
                                 <Text style={{color: '#71C1D9', paddingTop: 10}}>Novo plano</Text>
@@ -218,5 +218,22 @@ const Planos = (props) => {
         
     );
 }
+
+Planos.navigationOptions = ({ navigation }) => {
+    return {
+        headerStyle: {backgroundColor: PlanoColor},
+        headerTintColor: '#FFF',
+        title: 'Planos e Turmas',
+        headerLeft: 
+            <TouchableOpacity
+            style={{margin: 3, paddingLeft: 12}}
+                onPress={() => navigation.navigate('Estudio')
+                }
+            >
+                <Icon name='arrow-back' size={24} color='#FFF' />
+            </TouchableOpacity>,
+    }
+}
+
 
 export default Planos;

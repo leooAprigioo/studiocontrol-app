@@ -89,7 +89,10 @@ const Estudio = ({navigation}) => {
                         </View>
                         <Text style={styles.OptionTitle}>Planos e Turmas</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={[styles.Option, {backgroundColor: TreinoColor}]}>
+                    <TouchableOpacity 
+                    style={[styles.Option, {backgroundColor: TreinoColor}]}
+                    onPress={() => navigation.navigate('Treinos')}
+                    >
                         <View style={styles.IconBorder}>
                             <Icon name='dumbbell' size={30} color='#FFF' />
                         </View>

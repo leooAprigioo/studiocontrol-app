@@ -28,6 +28,14 @@ import UsuarioResult from './pages/Usuarios/UsuarioResult';
 import UsuarioDetail from './pages/Usuarios/UsuarioDetail';
 import UsuarioAddressForm from './pages/Usuarios/UsuarioAddressForm';
 
+/* Treino */
+import Treinos from './pages/TreinoTabs/Treinos';
+import TreinoForm from './pages/Treinos/TreinoForm';
+
+/* Exercicio */
+import Exercicios from './pages/TreinoTabs/Exercicios';
+import ExercicioForm from './pages/Exercicios/ExercicioForm';
+
 /* Professores */
 import ProfessorDetail from './pages/Professores/ProfessorDetail';
 
@@ -38,7 +46,7 @@ import MedidasForm from './pages/Medidas/MedidasForm';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
-import { MedidasColor } from './shared/styles/colors';
+import { MedidasColor, TreinoColor } from './shared/styles/colors';
 
 
 const headerOptions = {
@@ -123,7 +131,7 @@ const UsuarioStack = createStackNavigator({
 const PlanoStack = createStackNavigator({
     PlanoList: {
         screen: Planos,
-        navigationOptions: {header: null}
+        // navigationOptions: {header: null}
     },
     AulaForm: {
         screen: AulaForm,
@@ -139,7 +147,7 @@ const PlanoStack = createStackNavigator({
 const TurmaStack = createStackNavigator({
     TurmaList: {
         screen: Turmas,
-        navigationOptions: {header: null}
+        // navigationOptions: {header: null}
     },
     TurmaForm: {
         screen: TurmaForm
@@ -172,6 +180,7 @@ TurmaStack.navigationOptions = ({ navigation }) => {
     };
 };
 
+
 MedidasStack.navigationOptions = ({ navigation }) => {
     let header = null;
     if (navigation.state.index > 0) {
@@ -180,6 +189,82 @@ MedidasStack.navigationOptions = ({ navigation }) => {
         };
     }
   };
+
+const TreinoStack = createStackNavigator({
+    TreinoList: {
+        screen: Treinos
+    },
+    TreinoForm: {
+        screen: TreinoForm,
+    }
+})
+
+const ExercicioStack = createStackNavigator({
+    ExercicioList: {
+        screen: Exercicios
+    },
+    ExercicioForm: {
+        screen: ExercicioForm,
+    }
+});
+
+ExercicioStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    };
+};
+
+
+TreinoStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    };
+};
+
+const TreinosTab = createBottomTabNavigator({
+    Treinos: {
+        screen: TreinoStack,
+        navigationOptions: {
+            tabBarLabel: 'Treinos',
+            tabBarIcon: ({tintColor}) => (
+                <Icon name="dumbbell" size={20} color={tintColor} />
+            )
+        }
+    },
+    Exercicios: {
+        screen: ExercicioStack,
+        navigationOptions: {
+            tabBarLabel: 'Exercicios',
+            tabBarIcon: ({tintColor}) => (
+                <Icon name="running" size={20} color={tintColor} />
+            )
+        }
+    }
+},
+{
+    initialRouteName: "Treinos",
+    tabBarOptions: {
+        activeTintColor: TreinoColor,
+        inactiveTintColor: '#333',
+        style: {
+            backgroundColor: '#FFF',
+            height: 50,
+          },
+        labelStyle: {
+            fontSize: 12
+        }
+      },
+});
 
 const PlanosTab = createBottomTabNavigator({
     Planos: {
@@ -274,6 +359,7 @@ const App = createSwitchNavigator({
     HomeTab: HomeTab,
     Professores: ProfessoresStack,
     Planos: PlanosTab,
+    Treinos: TreinosTab,
     Usuarios: UsuarioStack
 },
 {

@@ -1,38 +1,13 @@
 import { FullPath } from '../config/Connection';
 
-const TreinoService = {
+const CredencialService = {
 
-    url: '/treino',
+    url: '/credencial',
 
     list: function () 
     {
         try {
             return fetch(FullPath + this.url, 
-                {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    }).then((response) => response.json())
-                    .then((responseJson) => {
-                        console.log(responseJson);
-                        return responseJson;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
-                });
-        } catch(error) {
-            console.log(error);
-            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
-        };
-    },
-
-    list_resumo: function () 
-    {
-        try {
-            return fetch(FullPath + '/treinoResumo', 
                 {
                     method: 'GET',
                     headers: {
@@ -106,4 +81,4 @@ const TreinoService = {
     }
 }
 
-export default TreinoService;
+export default CredencialService;

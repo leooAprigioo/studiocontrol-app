@@ -43,6 +43,9 @@ import ProfessorDetail from './pages/Professores/ProfessorDetail';
 import MedidasList from './pages/Medidas/MedidasList';
 import MedidasForm from './pages/Medidas/MedidasForm';
 
+/* Configurações */
+import ConfigHome from './pages/Configuracoes/ConfigHome'
+
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
@@ -354,13 +357,24 @@ const HomeTab = createBottomTabNavigator({
       },
 });
 
+const ConfiguracaoStack = createStackNavigator({
+    ConfigHome: {
+        screen: ConfigHome,
+        // navigationOptions: headerOptions,
+    },
+},
+{
+    initialRouteName: "ConfigHome",
+});
+
 const App = createSwitchNavigator({
     Login: LoginStack,
     HomeTab: HomeTab,
     Professores: ProfessoresStack,
     Planos: PlanosTab,
     Treinos: TreinosTab,
-    Usuarios: UsuarioStack
+    Usuarios: UsuarioStack,
+    ConfiguracaoStack: ConfiguracaoStack,
 },
 {
     initialRouteName: "HomeTab",

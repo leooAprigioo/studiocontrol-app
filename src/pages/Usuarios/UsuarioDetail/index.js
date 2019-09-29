@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
 });
 
 import AlunoService from '../../../services/AlunoService';
+import ProfessorService from '../../../services/ProfessorService';
 import PerfilService from '../../../services/PerfilService';
 import TurmaService from '../../../services/TurmaService';
 import PlanoService from '../../../services/PlanoService';
@@ -115,6 +116,7 @@ const UsuarioDetail = (props) => {
     const [loader, setLoader] = useState(true)
     const [user_type, setUser_Type] = useState([])
     const [aluno, setAluno] = useState([]);
+    const [professor, setProfessor] = useState([]);
     const [turma, setTurma] = useState([]);
     const [plano, setPlano] = useState([]);
 
@@ -122,8 +124,13 @@ const UsuarioDetail = (props) => {
         const id_perfil = props.navigation.getParam('id_perfil');
         const user_type = props.navigation.getParam('user_type');
         const aluno = props.navigation.getParam('aluno');
+        const professor = props.navigation.getParam('professor');
+        console.log(professor)
+        console.log(professor)
         setAluno(aluno)
+        setProfessor(professor)
         console.log(user_type)
+        setUser_Type(user_type)
 
         await PerfilService.get_full(id_perfil).then((resultsPerfil) => {
             console.log(resultsPerfil)
@@ -155,9 +162,14 @@ const UsuarioDetail = (props) => {
                     })
                     setTurma(resultsTurma)
                 })
-                PlanoService.get_plano_aluno_resumo(resultsAluno[0].id).then((resultsPlano) => setPlano(resultsPlano[0]))
+                PlanoService.get_plano_aluno_resumo(resultsAluno[0].id).then((resultsPlano) => setPlano(resultsPlano[0])).catch((error) => console.log(error))
             }).catch((error) => console.log(error))
 
+        } else if (user_type == 'professor') {
+            await ProfessorService.get(professor.id_professor).then((resultsProfessor) => {
+                console.log(resultsProfessor)
+                setProfessor(resultsProfessor[0])
+            })
         }
 
     } 
@@ -179,8 +191,13 @@ const UsuarioDetail = (props) => {
             <View style={styles.Container}>
                 <View style={styles.ContainerHeader}>
                     <Text style={fonts.Title}>{usuario.nome_completo}</Text>
-                    <Text style={fonts.SubTitle}>{aluno.objetivo}{console.log(aluno)}{console.log(turma)}{console.log(plano)}</Text>
-                    {/* <Text style={fonts.Description}>{aluno.objetivo}</Text> */}
+                    {/* <Text style={fonts.SubTitle}>{aluno.objetivo}{console.log(aluno)}{console.log(turma)}{console.log(plano)}</Text> */}
+                    { user_type && user_type == 'aluno' ?
+                        <Text style={fonts.Description}>{aluno.objetivo}</Text>
+                    :
+                        <Text style={fonts.Description}>{console.log(professor)}{professor.graduacao}</Text>
+                    }
+                    {console.log(plano)}
                 </View>
                 <View style={components.Divisor}></View>
                 <View style={styles.SectionPerfil}>
@@ -233,7 +250,43 @@ const UsuarioDetail = (props) => {
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                 >
-                    <View style={components.Slider}>
+                    {
+                        user_type == 'aluno' ?
+                        <View style={components.Slider}>
+                            <TouchableOpacity 
+                                style={[styles.Option, {backgroundColor: AlunoColor}]}
+                            >
+                                <Icon name='user-edit' size={20} color='#FFF' />
+                                <Text style={styles.OptionTitle}>Alterar dados pessoais</Text>
+                            </TouchableOpacity> 
+                            <TouchableOpacity 
+                                style={[styles.Option, {backgroundColor: PlanoColor}]}
+                            >
+                                <Icon name='receipt' size={20} color='#FFF' />    
+                                <Text style={styles.OptionTitle}>Planos e Turmas</Text>
+                            </TouchableOpacity> 
+                            <TouchableOpacity 
+                                style={[styles.Option, {backgroundColor: AulaColor}]}
+                                >
+                                <Icon name='calendar-day' size={20} color='#FFF' />
+                                <Text style={styles.OptionTitle}>Aulas Agendadas</Text>
+                            </TouchableOpacity> 
+                            <TouchableOpacity 
+                                style={[styles.Option, {backgroundColor: MedidasColor}]}
+                                onPress = {() => {props.navigation.navigate('MedidasList', {id_aluno: aluno.id})}}
+                            >
+                                <Icon name='ruler' size={20} color='#FFF' />
+                                <Text style={styles.OptionTitle}>Medidas</Text>
+                            </TouchableOpacity> 
+                            <TouchableOpacity
+                                style={[styles.Option, {backgroundColor: FinanceiroColor}]}
+                                >
+                                <Icon name='file-invoice-dollar' size={20} color='#FFF' />
+                                <Text style={styles.OptionTitle}>Mensalidades</Text>
+                            </TouchableOpacity> 
+                        </View>
+                        :
+                        <View style={components.Slider}>
                         <TouchableOpacity 
                             style={[styles.Option, {backgroundColor: AlunoColor}]}
                         >
@@ -244,7 +297,7 @@ const UsuarioDetail = (props) => {
                             style={[styles.Option, {backgroundColor: PlanoColor}]}
                         >
                             <Icon name='receipt' size={20} color='#FFF' />    
-                            <Text style={styles.OptionTitle}>Planos e Turmas</Text>
+                            <Text style={styles.OptionTitle}>Turmas</Text>
                         </TouchableOpacity> 
                         <TouchableOpacity 
                             style={[styles.Option, {backgroundColor: AulaColor}]}
@@ -252,45 +305,52 @@ const UsuarioDetail = (props) => {
                             <Icon name='calendar-day' size={20} color='#FFF' />
                             <Text style={styles.OptionTitle}>Aulas Agendadas</Text>
                         </TouchableOpacity> 
-                        <TouchableOpacity 
-                            style={[styles.Option, {backgroundColor: MedidasColor}]}
-                            onPress = {() => {props.navigation.navigate('MedidasList', {id_aluno: aluno.id})}}
-                        >
-                            <Icon name='ruler' size={20} color='#FFF' />
-                            <Text style={styles.OptionTitle}>Medidas</Text>
-                        </TouchableOpacity> 
                         <TouchableOpacity
                             style={[styles.Option, {backgroundColor: FinanceiroColor}]}
                             >
                             <Icon name='file-invoice-dollar' size={20} color='#FFF' />
-                            <Text style={styles.OptionTitle}>Mensalidades</Text>
+                            <Text style={styles.OptionTitle}>Pagamentos</Text>
                         </TouchableOpacity> 
                     </View>
+                    }
+                    
                 </ScrollView>
                 <View style={styles.SectionPlano}>
                     <View style={styles.SectionHeader}>
                         <Text style={fonts.SubTitle}>Planos e Turmas</Text>
                     </View>
-                    <View style={styles.ContainerHeader}>
+                    {                    
+                    plano && plano.nome_plano ?
+                    <View>
                         <View style={styles.ContainerHeader}>
-                            <Text style={fonts.Title}>{plano.nome_plano}</Text>
-                            <Text style={
-                                fonts.Description
-                                }>{plano.descricao_plano}</Text>
+                            <View style={styles.ContainerHeader}>
+                                <Text style={fonts.Title}>{plano.nome_plano}</Text>
+                                <Text style={
+                                    fonts.Description
+                                    }>{plano.descricao_plano}</Text>
+                            </View>
+                        </View>
+                        <View style={components.Divisor}></View>
+                        <View style={styles.SectionHorizontalItem}>
+                            <View style={[styles.Data, styles.AlignSelfStart]}>
+                                <Text style={styles.DataTitle}>Aulas por semana:</Text>
+                                <Text style={styles.DataValue}>{plano.quantidade_aula}</Text>
+                            </View>
+                            <View style={[styles.Data, styles.AlignSelfEnd]}>
+                                <Text style={styles.DataTitle}>Valor do plano:</Text>
+                                <Text style={[styles.DataValue, styles.DataPrice]}>R$ 
+                                {plano.valor_plano ? plano.valor_plano.toFixed(2).replace('.', ',') : null}</Text>
+                            </View>
                         </View>
                     </View>
-                    <View style={components.Divisor}></View>
+                    :
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>
-                            <Text style={styles.DataTitle}>Aulas por semana:</Text>
-                            <Text style={styles.DataValue}>{plano.quantidade_aula}</Text>
-                        </View>
-                        <View style={[styles.Data, styles.AlignSelfEnd]}>
-                            <Text style={styles.DataTitle}>Valor do plano:</Text>
-                            <Text style={[styles.DataValue, styles.DataPrice]}>R$ 
-                            {plano.valor_plano ? plano.valor_plano.toFixed(2).replace('.', ',') : null}</Text>
+                            <Text style={styles.DataValue}>Não há plano cadastrado</Text>
                         </View>
                     </View>
+
+                }
 
                     <View style={styles.SectionHorizontalItem}>
                         <View style={[styles.Data, styles.AlignSelfStart]}>

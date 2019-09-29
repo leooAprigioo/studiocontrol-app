@@ -52,7 +52,7 @@ const Treinos = (props) => {
     const [loader, setLoader] = useState(true)
 
     async function fetchData() {
-        await TreinoService.list().then((res) => setTreinos(res)).catch((error) => console.log(error));
+        await TreinoService.list_resumo().then((res) => setTreinos(res)).catch((error) => console.log(error));
     }
 
     useEffect(() => {
@@ -88,9 +88,9 @@ const Treinos = (props) => {
                         {treinos && treinos.length > 0 ? treinos.map((treino) => {
                             return <TouchableOpacity style={styles.Treino} key={treino.id.toString()}>
                                 <View style={styles.TreinoContent}>
-                                    <Text style={styles.ContentTitle}>{treino.nome}</Text>
-                                    <Text style={styles.ContentData}>10 Exercícios</Text>
-                                    <Text style={styles.ContentData}>Tempo: 60 mins</Text>
+                                    <Text style={styles.ContentTitle}>{treino.nome_treino}</Text>
+                                    <Text style={styles.ContentData}>{treino.quantidate_exercicio} exercícios cadastrados</Text>
+                                    <Text style={styles.ContentData}>Tempo: {treino.duracao_treino} mins</Text>
                                 </View>
                             </TouchableOpacity>
                         }) :

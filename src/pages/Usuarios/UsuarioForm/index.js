@@ -59,6 +59,7 @@ import AlunoService from '../../../services/AlunoService';
 import ProfessorService from '../../../services/ProfessorService';
 import TelefoneService from '../../../services/TelefoneService';
 import PlanoService from '../../../services/PlanoService';
+import CredencialService from '../../../services/CredencialService';
 
 
 const styles = StyleSheet.create({
@@ -244,6 +245,51 @@ const UsuarioForm = (props) => {
                             </View>
                         </View>
                     </View>
+                    <View style={styles.Section}>
+                        {/* SectionHeader */}
+                        <View style={styles.SectionHeader}>
+                            <Text style={styles.SectionTitle}>Informações de usuário</Text>
+                        </View>
+                        {/* SectionContent */}
+                        <View style={styles.SectionContent}>
+                            <View style={styles.Data}>
+                                    <TextInput 
+                                        placeholder="Nome de usuário"
+                                        underlineColorAndroid='#111'
+                                        selectionColor='#111'
+                                        style={styles.DataInput}
+                                        value={props.values.usuario}
+                                        onChangeText={text => props.setFieldValue('usuario', text)}
+                                    />
+                                { props.errors.usuario && <Text style={fonts.ErrorMessage}>{props.errors.usuario}</Text> }
+                            </View>
+                            <View style={styles.Data}>
+                                    <TextInput 
+                                        placeholder="Senha"
+                                        underlineColorAndroid='#111'
+                                        selectionColor='#111'
+                                        secureTextEntry={true}
+                                        style={styles.DataInput}
+                                        value={props.values.senha}
+                                        onChangeText={text => props.setFieldValue('senha', text)}
+                                    />
+                                { props.errors.senha && <Text style={fonts.ErrorMessage}>{props.errors.senha}</Text> }
+                            </View>
+                            <View style={styles.Data}>
+                                    <TextInput 
+                                        placeholder="Confirmar senha"
+                                        underlineColorAndroid='#111'
+                                        selectionColor='#111'
+                                        secureTextEntry={true}
+                                        style={styles.DataInput}
+                                        value={props.values.confir_senha}
+                                        onChangeText={text => props.setFieldValue('confir_senha', text)}
+                                    />
+                                {<Text style={fonts.ErrorMessage}>{props.status}</Text> }
+                            </View>
+                        </View>
+
+                    </View>
                 {
                     user_type == 'aluno' ?
                     <View style={styles.Section}>
@@ -330,7 +376,7 @@ UsuarioForm.navigationOptions = ({ navigation }) => {
 
 export default withFormik({
 
-    mapPropsToValues: () => ({ nome_completo: '', email: '', data_nascimento: new Date(), rg: '', cpf: '', complemento_aluno_prof: ''}),
+    mapPropsToValues: () => ({ nome_completo: '', email: '', data_nascimento: new Date(), rg: '', cpf: '', complemento_aluno_prof: '', usuario: '', senha: '', confir_senha: ''}),
 
     validationSchema: Yup.object().shape({
         nome_completo: Yup.string()
@@ -345,6 +391,14 @@ export default withFormik({
             .min(1),
         cpf: Yup.string()
             .required('Preencha o campo CPF'),
+        usuario: Yup.string()
+            .required('Preencha o campo usuário'),
+        senha: Yup.string()
+            .min(8, 'A senha deve conter no mínimo 8 caracteres')
+            .required('Preencha o campo senha'),
+        confir_senha: Yup.string()
+            .min(8, 'A senha deve conter no mínimo 8 caracteres')
+            .required('Preencha o campo confirmar senha'),
       }),
   
     handleSubmit: (values, props) => {
@@ -352,7 +406,18 @@ export default withFormik({
         let usuario = {}
         let telefone = {telefone: values.telefone}
         let now = new Date()
+        
         const user_type = props.props.navigation.getParam('user_type', 'aluno')
+
+        if (values.senha != values.confir_senha) {
+            props.resetForm({})
+            props.setStatus('Senhas diferentes')
+            return false;
+        }
+
+        let credencial = {usuario: values.usuario, senha: values.senha, id_tipo_credencial: user_type == 'aluno' ? 2 : 3}
+        
+
         if (user_type == 'aluno') {
             usuario.objetivo = values.complemento_aluno_prof
             if (values.id_plano == '') {
@@ -368,7 +433,10 @@ export default withFormik({
         values.data_nascimento = values.data_nascimento.getFullYear().toString() + '-' + (values.data_nascimento.getMonth() + 1).toString() + '-' + values.data_nascimento.getDate().toString()
         delete values.complemento_aluno_prof
         delete values.telefone 
-        delete values.id_plano     
+        delete values.id_plano
+        delete values.usuario
+        delete values.senha
+        delete values.confir_senha
         console.log(values)
         console.log(usuario)
         console.log(telefone)
@@ -383,9 +451,29 @@ export default withFormik({
                 )
                 return false
             } 
+            credencial.id_perfil = resultsPerfil[0].id
             usuario.id_perfil = resultsPerfil[0].id
             telefone.id_perfil = resultsPerfil[0].id
             console.log(resultsPerfil)
+            CredencialService.post(credencial).then((resultsCredencial) => {
+                if ('error' in resultsCredencial) {
+                    Alert.alert('Não foi possível cadastrar o usuário', 'Pedimos desculpas pelo transtorno. Tente novamente mais tarde.', 
+                    [{
+                        text: 'Ok',
+                        onPress: () => props.props.navigation.goBack()
+                    }],
+                    {cancelable: false},
+                )
+                }
+            }).catch((error) => {
+                Alert.alert('Não foi possível cadastrar o usuário', 'Pedimos desculpas pelo transtorno. Tente novamente mais tarde.', 
+                [{
+                    text: 'Ok',
+                    onPress: () => props.props.navigation.goBack()
+                }],
+                {cancelable: false},
+            )
+            })
             TelefoneService.post(telefone).then((resultsTelefone) => {
                 if ('error' in resultsTelefone) {
                     Alert.alert('Não foi possível cadastrar o telefone', 'Pedimos desculpas pelo transtorno. Não se preocupe, o telefone pode ser cadastrado mais tarde.', 

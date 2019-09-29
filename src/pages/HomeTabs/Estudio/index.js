@@ -32,6 +32,7 @@ import {
 } from '../../../shared/styles/colors'
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { tsPropertySignature } from '@babel/types';
 
 const styles = StyleSheet.create({
     Container,
@@ -100,7 +101,10 @@ const Estudio = ({navigation}) => {
                     </TouchableOpacity>
                 </View>
                 <View style={styles.Row}>
-                    <TouchableOpacity style={[styles.Option, {backgroundColor: ConfiguracaoColor}]}>
+                    <TouchableOpacity 
+                        style={[styles.Option, {backgroundColor: ConfiguracaoColor}]}
+                        onPress={() => navigation.navigate('ConfigHome')}
+                    >
                         <View style={styles.IconBorder}>
                             <Icon name='cog' size={30} color='#FFF' />
                         </View>

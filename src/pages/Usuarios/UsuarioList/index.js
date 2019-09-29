@@ -91,6 +91,7 @@ const UsuarioList = (props) => {
         <View style={styles.Container}>
             {
                 user_type == 'aluno' ?
+                    alunos.length > 0 ?
                 <View>
                     {console.log(user_type)}
                     <FlatList
@@ -105,14 +106,12 @@ const UsuarioList = (props) => {
                                 <Text style={styles.GoalDescription}>{item.objetivo}</Text>
                             </TouchableOpacity>}
                     />
-                    <TouchableOpacity 
-                        style={[buttons.FloatingButton, {backgroundColor: AlunoColor}]}
-                        onPress={() => props.navigation.navigate('UsuarioForm', {user_type: 'aluno'})}
-                    >
-                        <Icon name='add' size={20} color='#FFF' />
-                    </TouchableOpacity>
+
                 </View>
+                :
+                <View style={{flex: 1, padding: 10}}><Text style={{fontSize: 16, textAlign: 'center'}}>Não há alunos cadastrados</Text></View>
             :
+            professores.length > 0 ?
             <View>
                 {console.log(user_type)}
                 <FlatList
@@ -121,19 +120,31 @@ const UsuarioList = (props) => {
                     renderItem={({item}) => 
                         <TouchableOpacity 
                             style={[styles.ListItem, {borderLeftColor: ProfessorColor,}]}
-                            //onPress={() => props.navigation.navigate('UsuarioDetail', {id_perfil: item.id_perfil, aluno: {id_aluno: item.id, objetivo: item.objetivo, id_plano: item.id_plano}, user_type: user_type})}
+                            onPress={() => props.navigation.navigate('UsuarioDetail', {id_perfil: item.id_perfil, professor: {id_professor: item.id, graduacao: item.graduacao}, user_type: user_type})}
                         >
                             <Text style={styles.ListItemTitle}>{item.nome_completo}</Text>
                             <Text style={styles.GoalDescription}>{item.graduacao}{console.log(item)}</Text>
                         </TouchableOpacity>}
                 />
+            </View>
+            :
+            <View style={{flex: 1, padding: 10}}><Text style={{fontSize: 16, textAlign: 'center'}}>Não há professores cadastrados</Text></View>
+            }
+                {
+                    user_type == 'aluno' ?
+                    <TouchableOpacity 
+                    style={[buttons.FloatingButton, {backgroundColor: AlunoColor}]}
+                    onPress={() => props.navigation.navigate('UsuarioForm', {user_type: 'aluno'})}
+                >
+                    <Icon name='add' size={20} color='#FFF' />
+                </TouchableOpacity>
+                :
                 <TouchableOpacity 
                     style={[buttons.FloatingButton, {backgroundColor: ProfessorColor}]}
                     onPress={() => props.navigation.navigate('UsuarioForm', {user_type: 'professor'})}
                 >
                     <Icon name='add' size={20} color='#FFF' />
                 </TouchableOpacity>
-            </View>
             }
         </View>
     )

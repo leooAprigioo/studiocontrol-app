@@ -30,6 +30,10 @@ import {
     ProfessorColor
 } from '../../../shared/styles/colors'
 
+import AddFloatingButton from '../../../components/AddFloatingButton';
+
+import BackButton from '../../../components/BackButton';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PerfilService from '../../../services/PerfilService';
@@ -52,8 +56,36 @@ const buttons = StyleSheet.create({
 const UsuarioList = (props) => {
 
     const [alunos, setAlunos] = useState([]);
+    const [userFilter, setUserFilter] = useState([])
     const [user_type, setUser_Type] = useState([]);
     const [professores, setProfessores] = useState([]);
+
+    _onLongPressButton = () => {
+        
+    }
+
+    _onChangeSearchText = (text) => {
+        let tempArr = []
+        if (user_type == 'aluno')  {
+            tempArr = alunos.filter((value) => {
+                console.log(value)
+                if (value.nome_completo.search(text) != -1) {
+                    return value
+                }
+                
+            })
+        } else if (user_type == 'professor') {
+            tempArr = professores.filter((value) => {
+                console.log(value)
+                if (value.nome_completo.search(text) != -1) {
+                    return value
+                }
+                
+            })
+        }
+
+        setUserFilter(tempArr)
+    }
 
     async function fetchData() {
         // TODO User type in useEffect
@@ -61,9 +93,9 @@ const UsuarioList = (props) => {
         setUser_Type(user_type)
         console.log(user_type)
         if (user_type == 'aluno') {
-            await PerfilService.listAluno().then((res) => setAlunos(res)).catch((error) => console.log(error));
+            await PerfilService.listAluno().then((res) => {setAlunos(res), setUserFilter(res)}).catch((error) => console.log(error));
         } else if (user_type == 'professor') {
-            await PerfilService.listProfessor().then((res) => setProfessores(res)).catch((error) => console.log(error));
+            await PerfilService.listProfessor().then((res) => {setProfessores(res); setUserFilter(res)}).catch((error) => console.log(error));
         }
         
     }
@@ -91,12 +123,12 @@ const UsuarioList = (props) => {
         <View style={styles.Container}>
             {
                 user_type == 'aluno' ?
-                    alunos.length > 0 ?
+                    userFilter.length > 0 ?
                 <View>
                     {console.log(user_type)}
                     <FlatList
                         keyExtractor={item => item.id.toString()}
-                        data={alunos}
+                        data={userFilter}
                         renderItem={({item}) => 
                             <TouchableOpacity 
                                 style={[styles.ListItem, {borderLeftColor: AlunoColor,}]}
@@ -111,12 +143,12 @@ const UsuarioList = (props) => {
                 :
                 <View style={{flex: 1, padding: 10}}><Text style={{fontSize: 16, textAlign: 'center'}}>Não há alunos cadastrados</Text></View>
             :
-            professores.length > 0 ?
+            userFilter.length > 0 ?
             <View>
                 {console.log(user_type)}
                 <FlatList
                     keyExtractor={item => item.id.toString()}
-                    data={professores}
+                    data={userFilter}
                     renderItem={({item}) => 
                         <TouchableOpacity 
                             style={[styles.ListItem, {borderLeftColor: ProfessorColor,}]}
@@ -132,19 +164,9 @@ const UsuarioList = (props) => {
             }
                 {
                     user_type == 'aluno' ?
-                    <TouchableOpacity 
-                    style={[buttons.FloatingButton, {backgroundColor: AlunoColor}]}
-                    onPress={() => props.navigation.navigate('UsuarioForm', {user_type: 'aluno'})}
-                >
-                    <Icon name='add' size={20} color='#FFF' />
-                </TouchableOpacity>
+                <AddFloatingButton nav='UsuarioForm' backgroundColor={AlunoColor} params={{user_type: 'aluno'}}></AddFloatingButton>
                 :
-                <TouchableOpacity 
-                    style={[buttons.FloatingButton, {backgroundColor: ProfessorColor}]}
-                    onPress={() => props.navigation.navigate('UsuarioForm', {user_type: 'professor'})}
-                >
-                    <Icon name='add' size={20} color='#FFF' />
-                </TouchableOpacity>
+                <AddFloatingButton nav='UsuarioForm' backgroundColor={ProfessorColor} params={{user_type: 'professor'}}></AddFloatingButton>
             }
         </View>
     )
@@ -157,21 +179,16 @@ UsuarioList.navigationOptions = ({ navigation }) => {
         headerTintColor: '#FFF',
         title: 'Alunos',
         headerLeft: 
-            <TouchableOpacity
-            style={{margin: 3, paddingLeft: 12}}
-                onPress={() => navigation.navigate('Estudio')
-                }
-            >
-                <Icon name='arrow-back' size={24} color='#FFF' />
-            </TouchableOpacity>,
+            <BackButton nav='Estudio'></BackButton>,
         headerTitle: 
             <View style={styles.HeaderContent}>
                 <View style={styles.SearchInput}>
                     <Icon name='search' size={20} color='#CCC' />
                     <TextInput 
-                        placeholder="Pesquisar por nome ou CPF"
+                        placeholder={user_type == 'aluno' ? 'Digite o nome do aluno' : 'Digite o nome do professor'}
                         // underlineColorAndroid='#FFF'
                         placeholderTextColor='#CCC'
+                        onChangeText={(text) => _onChangeSearchText(text)}
                         style={{flex: 1,}}
                     />
                 </View>

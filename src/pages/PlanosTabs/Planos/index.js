@@ -48,6 +48,8 @@ import {
     PlanoColor
 } from '../../../shared/styles/colors'
 
+import BackButton from '../../../components/BackButton'
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import PlanoService from '../../../services/PlanoService';
@@ -225,13 +227,7 @@ Planos.navigationOptions = ({ navigation }) => {
         headerTintColor: '#FFF',
         title: 'Planos e Turmas',
         headerLeft: 
-            <TouchableOpacity
-            style={{margin: 3, paddingLeft: 12}}
-                onPress={() => navigation.navigate('Estudio')
-                }
-            >
-                <Icon name='arrow-back' size={24} color='#FFF' />
-            </TouchableOpacity>,
+            <BackButton nav='Estudio'></BackButton>,
     }
 }
 

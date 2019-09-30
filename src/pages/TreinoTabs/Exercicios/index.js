@@ -24,7 +24,8 @@ import {
 import { Title } from '../../../shared/styles/fonts';
 import { FloatingButton } from '../../../shared/styles/buttons';
 import { TreinoColor } from '../../../shared/styles/colors';
-
+import BackButton from '../../../components/BackButton';
+import AddFloatingButton from '../../../components/AddFloatingButton';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import ExercicioService from '../../../services/ExercicioService';
@@ -103,12 +104,7 @@ const Exercicios = (props) => {
 
                     </View>
                 </ScrollView>
-                <TouchableOpacity 
-                    style={[buttons.FloatingButton, {backgroundColor: TreinoColor}]}
-                    onPress={() => props.navigation.navigate('ExercicioForm')}
-                >
-                    <Icon name='add' size={20} color='#FFF' />
-                </TouchableOpacity>
+                <AddFloatingButton nav='ExercicioForm' backgroundColor={TreinoColor}></AddFloatingButton>
             </View>
             }
         </View>
@@ -121,13 +117,7 @@ Exercicios.navigationOptions = ({ navigation }) => {
         headerTintColor: '#FFF',
         title: 'Treinos e Exercícios',
         headerLeft: 
-            <TouchableOpacity
-            style={{margin: 3, paddingLeft: 12}}
-                onPress={() => navigation.navigate('Estudio')
-                }
-            >
-                <Icon name='arrow-back' size={24} color='#FFF' />
-            </TouchableOpacity>,
+            <BackButton nav='Estudio'></BackButton>
     }
 }
 

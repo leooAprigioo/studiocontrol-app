@@ -36,9 +36,6 @@ import TreinoForm from './pages/Treinos/TreinoForm';
 import Exercicios from './pages/TreinoTabs/Exercicios';
 import ExercicioForm from './pages/Exercicios/ExercicioForm';
 
-/* Professores */
-import ProfessorDetail from './pages/Professores/ProfessorDetail';
-
 /* Medidas */
 import MedidasList from './pages/Medidas/MedidasList';
 import MedidasForm from './pages/Medidas/MedidasForm';
@@ -83,18 +80,6 @@ const MedidasStack = createStackNavigator({
 {
     initialRouteName: 'MedidasList',
 });
-
-const ProfessoresStack = createStackNavigator({
-    ProfessorDetail: {
-        screen: ProfessorDetail,
-        navigationOptions: headerOptions,
-    },
-},
-{
-    initialRouteName: "ProfessorDetail",
-});
-
-
 
 const UsuarioStack = createStackNavigator({
     UsuarioResult: {
@@ -370,14 +355,13 @@ const ConfiguracaoStack = createStackNavigator({
 const App = createSwitchNavigator({
     Login: LoginStack,
     HomeTab: HomeTab,
-    Professores: ProfessoresStack,
     Planos: PlanosTab,
     Treinos: TreinosTab,
     Usuarios: UsuarioStack,
-    ConfiguracaoStack: ConfiguracaoStack,
+    Configuracoes: ConfiguracaoStack,
 },
 {
-    initialRouteName: "HomeTab",
+    initialRouteName: "Usuarios",
 });
 
 const Routes = createAppContainer(App);

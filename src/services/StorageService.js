@@ -25,7 +25,9 @@ const StorageService = {
     remove: async function (key) {
         try {
             this.get(key).then((results) => {
-                if (!('error' in results) && results != null) {
+                console.log(jsonResults)
+                let jsonResults = JSON.parse(results)
+                if (!('error' in jsonResults) && results != null) {
                     AsyncStorage.removeItem('@'+key)
                 }
             })

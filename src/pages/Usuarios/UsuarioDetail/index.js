@@ -126,7 +126,7 @@ const UsuarioDetail = (props) => {
         const aluno = props.navigation.getParam('aluno');
         const professor = props.navigation.getParam('professor');
         console.log(professor)
-        console.log(professor)
+        console.log(aluno)
         setAluno(aluno)
         setProfessor(professor)
         console.log(user_type)
@@ -267,6 +267,7 @@ const UsuarioDetail = (props) => {
                             </TouchableOpacity> 
                             <TouchableOpacity 
                                 style={[styles.Option, {backgroundColor: AulaColor}]}
+                                onPress={() => props.navigation.navigate('AgendamentoUsuario', {aluno: aluno, operation: 'get'})}
                                 >
                                 <Icon name='calendar-day' size={20} color='#FFF' />
                                 <Text style={styles.OptionTitle}>Aulas Agendadas</Text>
@@ -289,6 +290,7 @@ const UsuarioDetail = (props) => {
                         <View style={components.Slider}>
                         <TouchableOpacity 
                             style={[styles.Option, {backgroundColor: AlunoColor}]}
+                            onPress={() => props.navigation.navigate('UsuarioForm', {usuario: usuario, user_type: 'professor', operation: 'update'})}
                         >
                             <Icon name='user-edit' size={20} color='#FFF' />
                             <Text style={styles.OptionTitle}>Alterar dados pessoais</Text>

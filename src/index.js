@@ -1,11 +1,14 @@
 import React from 'react';
 
 import Login from './pages/Login';
+
+/* SplashScreen */
+import SplashScreen from './pages/SplashScreen';
+
 /* HomeTab */
 import Home from './pages/HomeTabs/Home';
 import Estudio from './pages/HomeTabs/Estudio';
 import Financeiro from './pages/HomeTabs/Financeiro';
-import Aulas from './pages/HomeTabs/Aulas';
 
 /* PlanosTab */
 
@@ -14,6 +17,9 @@ import Turmas from './pages/PlanosTabs/Turmas'
 
 /* Aula */
 import AulaForm from './pages/Aulas/AulaForm'
+import AgendamentoList from './pages/Aulas/AgendamentoList'
+import AgendamentoDetail from './pages/Aulas/AgendamentoDetail'
+import AgendamentoForm from './pages/Aulas/AgendamentoForm'
 
 /* Turma */
 import TurmaForm from './pages/Turmas/TurmaForm'
@@ -46,16 +52,59 @@ import ConfigHome from './pages/Configuracoes/ConfigHome'
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
-import { MedidasColor, TreinoColor } from './shared/styles/colors';
+import { MedidasColor, TreinoColor, AulaColor, FinanceiroColor, AlunoColor, PlanoColor } from './shared/styles/colors';
 
 
-const headerOptions = {
-    headerStyle: {backgroundColor: '#48a89e'},
-    headerTintColor: '#fff',
-    headerTitleStyle: {
-      fontWeight: 'bold',
+const SplashStack = createStackNavigator({
+    SplashScreen: {
+        screen: SplashScreen,
+        navigationOptions: {
+            header: null,
+        },
     },
+})
+
+const AgendamentoStack = createStackNavigator({
+    AgendamentoList: {
+        screen: AgendamentoList,
+        navigationOptions: {
+            header: null,
+        },
+    },
+    AgendamentoDetail: {
+        screen: AgendamentoDetail
+    },
+    AgendamentoForm: {
+        screen: AgendamentoForm
+    }
+},
+{
+    initialRouteName: 'AgendamentoList',
 }
+)
+
+
+AgendamentoStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    let header;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+        header = null;;
+    }
+
+    return {
+        tabBarVisible,
+        header,
+    };
+};
+
+// SplashStack.navigationOptions = ({ navigation }) => {
+//     if (navigation.state.index == 0) {
+//         setTimeout(() => {
+//            navigation.navigate('Login');
+//         }, 2000 )
+//     }
+//   };
 
 const LoginStack = createStackNavigator({
     Login: {
@@ -84,18 +133,23 @@ const MedidasStack = createStackNavigator({
 const UsuarioStack = createStackNavigator({
     UsuarioResult: {
         screen: UsuarioResult,
-        // navigationOptions: headerOptions,
     },
     UsuarioList: {
         screen: UsuarioList,
-        // navigationOptions: headerOptions,
     },
     UsuarioForm: {
         screen: UsuarioForm,
-        // navigationOptions: headerOptions,
     },
     UsuarioDetail: {
         screen: UsuarioDetail,
+    },
+    AgendamentoUsuario:{
+        screen: AgendamentoStack,
+        navigationOptions: {
+            headerStyle: {backgroundColor: AulaColor},
+            title: 'Agendamento',
+            headerTintColor: '#FFF'
+        }
     },
     Medidas: {
         screen: MedidasStack,
@@ -119,7 +173,6 @@ const UsuarioStack = createStackNavigator({
 const PlanoStack = createStackNavigator({
     PlanoList: {
         screen: Planos,
-        // navigationOptions: {header: null}
     },
     AulaForm: {
         screen: AulaForm,
@@ -135,7 +188,6 @@ const PlanoStack = createStackNavigator({
 const TurmaStack = createStackNavigator({
     TurmaList: {
         screen: Turmas,
-        // navigationOptions: {header: null}
     },
     TurmaForm: {
         screen: TurmaForm
@@ -295,8 +347,11 @@ const HomeTab = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel:"Meu estúdio",
             tabBarIcon: ({ tintColor }) => (
-              <Icon name="bars" size={20} color={tintColor} />
-            )
+              <Icon name="th-large" size={20} color={tintColor} />
+            ),
+            tabBarOptions: {
+                activeTintColor: PlanoColor,
+            }
         }
     },
     Home: {
@@ -304,17 +359,23 @@ const HomeTab = createBottomTabNavigator({
         navigationOptions: {
             tabBarLabel:"Home",
             tabBarIcon: ({ tintColor }) => (
-              <Icon name="home" size={20} color={tintColor} />
-            )
+              <Icon name="star" size={20} color={tintColor} />
+            ),
+            tabBarOptions: {
+                activeTintColor: AlunoColor,
+            }
         }
     },
     Aulas: {
-        screen: Aulas,
+        screen: AgendamentoStack,
         navigationOptions: {
             tabBarLabel:"Aulas",
             tabBarIcon: ({ tintColor }) => (
-              <Icon name="address-book" size={20} color={tintColor} />
-            )
+              <Icon name="book-open" size={20} color={tintColor} />
+            ),
+            tabBarOptions: {
+                activeTintColor: AulaColor,
+            },
         }
     },
     Financeiro: {
@@ -323,14 +384,16 @@ const HomeTab = createBottomTabNavigator({
             tabBarLabel:"Financeiro",
             tabBarIcon: ({ tintColor }) => (
               <Icon name="dollar-sign" size={20} color={tintColor} />
-            )
+            ),
+            tabBarOptions: {
+                activeTintColor: FinanceiroColor,
+            }
         }
     },
 },
 {
     initialRouteName: "Estudio",
     tabBarOptions: {
-        activeTintColor: '#48a89e',
         inactiveTintColor: '#333',
         style: {
             backgroundColor: '#FFF',
@@ -359,9 +422,10 @@ const App = createSwitchNavigator({
     Treinos: TreinosTab,
     Usuarios: UsuarioStack,
     Configuracoes: ConfiguracaoStack,
+    SplashScreen: SplashStack,
 },
 {
-    initialRouteName: "Usuarios",
+    initialRouteName: "HomeTab",
 });
 
 const Routes = createAppContainer(App);

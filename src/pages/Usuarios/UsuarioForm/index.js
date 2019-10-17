@@ -100,12 +100,39 @@ const UsuarioForm = (props) => {
     const [showDatetime, setShowDatetime] = useState({data: false})
     const [labelChange, setLabelChange] = useState(false)
     const [planos, setPlanos] = useState([])
+    const [usuario, setUsuario] = useState([])
+
+    function fillInputProps(data) {
+        props.values.nome_completo = data.nome_completo
+        props.values.email = data.email
+        props.values.telefone = data.telefone[0]
+        props.values.data_nascimento = data.data_nascimento
+        props.values.rg = data.rg
+        props.values.cpf = data.cpf
+       console.log(data)
+    }
+
+    function clearInputProps() {
+        props.values.nome_completo = ''
+        props.values.email = ''
+        props.values.telefone = ''
+        props.values.data_nascimento = new Date()
+        props.values.rg = ''
+        props.values.cpf = ''
+    }
 
     async function fetchData() {
         const user_type = props.navigation.getParam('user_type', 'aluno')
         setUser_Type(user_type);
 
         await PlanoService.list_pre_cadastrado().then((res) => {console.log(res); setPlanos(res)}).catch((error) => {console.log(error)})
+    }
+
+    async function updateData() {
+        const usuario = props.navigation.getParam('usuario')
+        setUsuario(usuario)
+        fillInputProps(usuario)
+
     }
 
     toggleDateTimePicker = (isOpen) => {
@@ -116,7 +143,14 @@ const UsuarioForm = (props) => {
     }
 
     useEffect(() => {
-        fetchData()
+        const operation = props.navigation.getParam('operation', 'create');
+        console.log(operation)
+        if (operation == 'create') {
+            fetchData()
+        } else if (operation == 'update'){
+            updateData()
+        }
+        
     },[])
 
     return (

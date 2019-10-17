@@ -14,7 +14,7 @@ export const AppLogo = {
 
 export const AppLogoImage = {
     width: 70, 
-    height: 70,
+    height: 90,
 }
 
 export const AppLogoTitle = {

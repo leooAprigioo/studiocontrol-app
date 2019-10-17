@@ -28,7 +28,14 @@ import {
 import { 
     BackgroundColorLogin,
     BackgroundLocationLogin,
+    AlunoColor,
 } from '../../shared/styles/colors';
+
+import {
+    ProfessorColor,
+    PlanoColor,
+    TreinoColor,
+} from '../../shared/styles/colors'
 
 import {
     ErrorMessage,
@@ -71,7 +78,7 @@ const Login = (props) => {
 
     return (
         
-        <LinearGradient location={BackgroundLocationLogin} colors={BackgroundColorLogin} style={[styles.Container]}>
+        <LinearGradient locations={[.7, 1]} colors={[AlunoColor, '#3c88ab']} style={[styles.Container]}>
             <View style={styles.AppLogo}>
                 <Image 
                     source={require('../../public/img/Logo.png')} style={styles.AppLogoImage} 
@@ -109,7 +116,7 @@ const Login = (props) => {
                     <View>
                         <TouchableOpacity
                             accessibilityLabel="Acesse o sistema"   
-                            style={[buttons.LargeButton, {backgroundColor: '#abddd8',}]}
+                            style={[buttons.LargeButton, {backgroundColor: '#3c88ab',}]}
                             onPress={props.handleSubmit}
                         >
                             <Text style={[buttons.LargeButtonTitle, {color: '#FFF',}]}>Entrar</Text>

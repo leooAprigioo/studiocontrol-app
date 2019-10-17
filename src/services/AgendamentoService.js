@@ -1,8 +1,8 @@
 import { FullPath } from '../config/Connection';
 
-const AulaService = {
+const AgendamentoService = {
 
-    url: '/aula',
+    url: '/agendamento_aula',
 
     list: function () 
     {
@@ -29,10 +29,35 @@ const AulaService = {
         };
     },
 
-    listByAluno: function (id) 
+    listResumo: function () 
     {
         try {
-            return fetch(FullPath + '/aula_aluno/' + id, 
+            return fetch(FullPath + '/agendamento_resumo', 
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log(responseJson);
+                        return responseJson;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
+                });
+        } catch(error) {
+            console.log(error);
+            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
+        };
+    },
+
+    listAgendados: function () 
+    {
+        try {
+            return fetch(FullPath + '/agendados_aula', 
                 {
                     method: 'GET',
                     headers: {
@@ -58,6 +83,56 @@ const AulaService = {
     {
         try {
             return fetch(FullPath + this.url + '/' + id, 
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log(responseJson);
+                        return responseJson;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
+                });
+        } catch(error) {
+            console.log(error);
+            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
+        };
+    },
+
+    getResumo: function (id) 
+    {
+        try {
+            return fetch(FullPath + '/agendamento_resumo/' + id.toString(), 
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log(responseJson);
+                        return responseJson;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
+                });
+        } catch(error) {
+            console.log(error);
+            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
+        };
+    },
+
+    getSemana: function () 
+    {
+        try {
+            return fetch(FullPath + '/agendamento_semana', 
                 {
                     method: 'GET',
                     headers: {
@@ -106,4 +181,4 @@ const AulaService = {
     }
 }
 
-export default AulaService;
+export default AgendamentoService;

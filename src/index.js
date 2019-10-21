@@ -2,6 +2,11 @@ import React from 'react';
 
 import Login from './pages/Login';
 
+import MensalidadeList from './pages/Financeiro/Mensalidade/MensalidadeList'
+import PagamentoForm from './pages/Financeiro/PagamentoForm';
+import AulasAReceberList from './pages/Financeiro/AulasAReceberList';
+
+
 /* SplashScreen */
 import SplashScreen from './pages/SplashScreen';
 
@@ -53,7 +58,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 import { createAppContainer, createStackNavigator, createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import { MedidasColor, TreinoColor, AulaColor, FinanceiroColor, AlunoColor, PlanoColor } from './shared/styles/colors';
-
+import Pagamento_AulaForm from './pages/Financeiro/Pagamento_AulaForm';
 
 const SplashStack = createStackNavigator({
     SplashScreen: {
@@ -63,6 +68,54 @@ const SplashStack = createStackNavigator({
         },
     },
 })
+
+const MensalidadeStack = createStackNavigator({
+    MensalidadeList: {
+        screen: MensalidadeList,
+    },
+    PagamentoForm: {
+        screen: PagamentoForm
+    },
+    AulasAReceberList: {
+        screen: AulasAReceberList
+    },
+    PagamentoAulaForm: {
+        screen: Pagamento_AulaForm
+    }
+}, 
+{
+    initialRouteName: 'MensalidadeList'
+})
+
+const FinanceiroStack = createStackNavigator({
+    Financeiro: {
+        screen: Financeiro,
+        navigationOptions: {
+            header: null,
+        },
+    },
+    Mensalidade: {
+        screen: MensalidadeStack,
+        navigationOptions: {
+            header: null,
+        }
+    }
+},
+{
+    initialRouteName: 'Financeiro'
+}
+)
+
+FinanceiroStack.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+
+    return {
+        tabBarVisible,
+    };
+};
 
 const AgendamentoStack = createStackNavigator({
     AgendamentoList: {
@@ -354,18 +407,18 @@ const HomeTab = createBottomTabNavigator({
             }
         }
     },
-    Home: {
-        screen: Home,
-        navigationOptions: {
-            tabBarLabel:"Home",
-            tabBarIcon: ({ tintColor }) => (
-              <Icon name="star" size={20} color={tintColor} />
-            ),
-            tabBarOptions: {
-                activeTintColor: AlunoColor,
-            }
-        }
-    },
+    // Home: {
+    //     screen: Home,
+    //     navigationOptions: {
+    //         tabBarLabel:"Home",
+    //         tabBarIcon: ({ tintColor }) => (
+    //           <Icon name="star" size={20} color={tintColor} />
+    //         ),
+    //         tabBarOptions: {
+    //             activeTintColor: AlunoColor,
+    //         }
+    //     }
+    // },
     Aulas: {
         screen: AgendamentoStack,
         navigationOptions: {
@@ -379,7 +432,7 @@ const HomeTab = createBottomTabNavigator({
         }
     },
     Financeiro: {
-        screen: Financeiro,
+        screen: FinanceiroStack,
         navigationOptions: {
             tabBarLabel:"Financeiro",
             tabBarIcon: ({ tintColor }) => (
@@ -392,7 +445,7 @@ const HomeTab = createBottomTabNavigator({
     },
 },
 {
-    initialRouteName: "Estudio",
+    initialRouteName: "Financeiro",
     tabBarOptions: {
         inactiveTintColor: '#333',
         style: {

@@ -29,6 +29,32 @@ const TreinoService = {
         };
     },
 
+    listByTreinoAgendamento: function (id_treino) 
+    {
+        console.log(id_treino);
+        try {
+            return fetch(FullPath + '/treino_exercicio/' + id_treino, 
+                {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    }).then((response) => response.json())
+                    .then((responseJson) => {
+                        console.log(id_treino);
+                        return responseJson;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
+                });
+        } catch(error) {
+            console.log(error);
+            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
+        };
+    },
+
     list_resumo: function () 
     {
         try {

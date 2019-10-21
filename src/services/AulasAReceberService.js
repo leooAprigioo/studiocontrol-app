@@ -1,8 +1,8 @@
 import { FullPath } from '../config/Connection';
 
-const AlunoService = {
+const AulasAReceberService = {
 
-    url: '/aluno',
+    url: '/aulas_a_receber',
 
     list: function () 
     {
@@ -54,10 +54,10 @@ const AlunoService = {
         };
     },
 
-    getAlunoAgendado: function (id_aula, data_horario) 
+    getProfessorCpf: function (cpf) 
     {
         try {
-            return fetch(FullPath + '/aluno_agendado/'+ id_aula + '/' + data_horario, 
+            return fetch(FullPath + '/aulas_a_receber_professor_cpf/' + cpf, 
                 {
                     method: 'GET',
                     headers: {
@@ -103,7 +103,33 @@ const AlunoService = {
             console.log(error);
             return {error: 'Algo de errado aconteceu ao realizar a requisição'};
         };
+    },
+
+    put: function (values) 
+    {
+        try {
+            return fetch(FullPath + this.url, 
+                {
+                method: 'PUT',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(values),
+                }).then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                    return responseJson;
+                })
+                .catch((error) => {
+                    console.log(error);
+                    return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'}
+                });
+        } catch(error) {
+            console.log(error);
+            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
+        };
     }
 }
 
-export default AlunoService;
+export default AulasAReceberService;

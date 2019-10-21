@@ -1,8 +1,8 @@
 import { FullPath } from '../config/Connection';
 
-const AlunoService = {
+const AulaService = {
 
-    url: '/aluno',
+    url: '/aula',
 
     list: function () 
     {
@@ -29,10 +29,10 @@ const AlunoService = {
         };
     },
 
-    get: function (id) 
+    listByAluno: function (id) 
     {
         try {
-            return fetch(FullPath + this.url + '/' + id, 
+            return fetch(FullPath + '/aula_aluno/' + id, 
                 {
                     method: 'GET',
                     headers: {
@@ -54,10 +54,10 @@ const AlunoService = {
         };
     },
 
-    getAlunoAgendado: function (id_aula, data_horario) 
+    get: function (id) 
     {
         try {
-            return fetch(FullPath + '/aluno_agendado/'+ id_aula + '/' + data_horario, 
+            return fetch(FullPath + this.url + '/' + id, 
                 {
                     method: 'GET',
                     headers: {
@@ -106,4 +106,4 @@ const AlunoService = {
     }
 }
 
-export default AlunoService;
+export default AulaService;

@@ -187,11 +187,13 @@ const AgendamentoList = (props) => {
         let agendamentoNewList = []
         agendamentos.map((agendamento) => {
             console.log(data + ' - ' + dia)
+            console.log(agendamento)
             if (((agendamento.data_horario.getMonth() + 1) == data) && agendamento.data_horario.getDate() == dia) {
+                console.log('olar')
                 agendamentoNewList.push(agendamento)
             }
         })
-
+        console.log(agendamentoNewList)
         setAgendamentoOnDisplay(agendamentoNewList)
     }
 
@@ -209,7 +211,6 @@ const AgendamentoList = (props) => {
                 await AgendamentoService.getResumo(aluno.id).then((res) => {res = horarioToDateTime(res); setAgendamentos(res)}).catch((error) => console.log(error));
                 break
         }
-            //await AgendamentoService.listResumo().then((res) => {res = horarioToDateTime(res); setAgendamentos(res)}).catch((error) => console.log(error));
         
     }
 
@@ -273,13 +274,12 @@ const AgendamentoList = (props) => {
                     </ScrollView>
                 </View>
                 <View style={styles.Content}>
-
                     {
                         agendamentoOnDisplay && agendamentoOnDisplay.length > 0?
                         agendamentoOnDisplay.map((agendamento) => {
                             return <TouchableOpacity 
                                         style={styles.AulaAgendada}
-                                        onPress={() => props.navigation.navigate('AgendamentoDetail')}
+                                        onPress={() => props.navigation.navigate('AgendamentoDetail', {id_agendamento: agendamento.id_agendamento, id_treino: agendamento.id_treino})}
                                         key={agendamento.id_agendamento.toString()}
                                     >
                                         <View style={styles.AulaAgendadaHeader}>

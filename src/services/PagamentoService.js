@@ -1,8 +1,8 @@
 import { FullPath } from '../config/Connection';
 
-const AlunoService = {
+const PagamentoService = {
 
-    url: '/aluno',
+    url: '/pagamento',
 
     list: function () 
     {
@@ -54,31 +54,6 @@ const AlunoService = {
         };
     },
 
-    getAlunoAgendado: function (id_aula, data_horario) 
-    {
-        try {
-            return fetch(FullPath + '/aluno_agendado/'+ id_aula + '/' + data_horario, 
-                {
-                    method: 'GET',
-                    headers: {
-                        Accept: 'application/json',
-                        'Content-Type': 'application/json',
-                    },
-                    }).then((response) => response.json())
-                    .then((responseJson) => {
-                        console.log(responseJson);
-                        return responseJson;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return {error: 'Não foi possível conectar ao servidor. Tente novamente mais tarde'};
-                });
-        } catch(error) {
-            console.log(error);
-            return {error: 'Algo de errado aconteceu ao realizar a requisição'};
-        };
-    },
-
     post: function (values) 
     {
         try {
@@ -106,4 +81,4 @@ const AlunoService = {
     }
 }
 
-export default AlunoService;
+export default PagamentoService;

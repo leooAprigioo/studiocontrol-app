@@ -232,6 +232,7 @@ const AgendamentoList = (props) => {
                         horizontal={true} 
                         showsHorizontalScrollIndicator={false}
                         style={styles.HorizontalDateList}>
+                            {console.log(agendamentos)}
                             {datas.map((data) => {
                                 return <TouchableOpacity
                                             style={[styles.DateItem, data.id == activeData? styles.DateActiveItem:{}]}

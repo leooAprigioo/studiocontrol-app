@@ -89,7 +89,7 @@ const Financeiro = (props) => {
                 <View style={styles.Header}>
                     <View style={styles.HeaderTotalProfit}>
                         <Text style={styles.ProfitLabel}>Valor a receber</Text>
-                        <Text style={styles.ProfitValue}>R$ 15.000,00</Text>
+                        <Text style={styles.ProfitValue}>R$ 12.900,00</Text>
                         <Text style={styles.ProfitPeriod}>01/10 à 31/10</Text>
                     </View>
                     <View style={styles.TimelapseLine}>
@@ -101,7 +101,7 @@ const Financeiro = (props) => {
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
                                         <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 1200,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -109,8 +109,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>02</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 500,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -118,8 +118,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>03</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 740,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -127,8 +127,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>04</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 1570,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -136,8 +136,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>05</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 2100,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -145,8 +145,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>06</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 930,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -154,8 +154,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>07</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 1050,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -163,8 +163,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>08</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 690,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -172,8 +172,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>09</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 700,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -181,8 +181,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>10</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 300,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -190,8 +190,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>11</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 1770,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>
@@ -199,8 +199,8 @@ const Financeiro = (props) => {
                                 </View>   
                                 <View style={styles.DayOfTimelapse}>
                                     <View style={styles.DayBorder}>
-                                        <Text style={styles.Day}>01</Text>
-                                        <Text style={styles.ValueOfDay}>R$ 100,00</Text>
+                                        <Text style={styles.Day}>12</Text>
+                                        <Text style={styles.ValueOfDay}>R$ 1350,00</Text>
                                     </View>
                                     
                                     <View style={styles.DayMarker}></View>

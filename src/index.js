@@ -445,7 +445,7 @@ const HomeTab = createBottomTabNavigator({
     },
 },
 {
-    initialRouteName: "Financeiro",
+    initialRouteName: "Estudio",
     tabBarOptions: {
         inactiveTintColor: '#333',
         style: {
@@ -478,7 +478,7 @@ const App = createSwitchNavigator({
     SplashScreen: SplashStack,
 },
 {
-    initialRouteName: "HomeTab",
+    initialRouteName: "Login",
 });
 
 const Routes = createAppContainer(App);
